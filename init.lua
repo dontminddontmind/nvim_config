@@ -16,6 +16,8 @@ require "user.toggleterm"
 require "user.project"
 require "user.impatient"
 require "user.indentline"
+require "user.coderunner"
+require "user.sessionmanager"
 require "user.alpha"
 -- vim.cmd('source ~/.config/nvim/lua/user/markdown.vim')
 require "user.whichkey"

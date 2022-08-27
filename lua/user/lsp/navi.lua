@@ -33,16 +33,17 @@ ae.setup({
   -- A list of all symbols to display. Set to false to display all symbols.
   -- This can be a filetype map (see :help aerial-filetype-map)
   -- To see all available values, see :help SymbolKind
-  filter_kind = {
-    "Class",
-    "Constructor",
-    "Enum",
-    "Function",
-    "Interface",
-    "Module",
-    "Method",
-    "Struct",
-  },
+  -- filter_kind = {
+  --   "Class",
+  --   "Constructor",
+  --   "Enum",
+  --   "Function",
+  --   "Interface",
+  --   "Module",
+  --   "Method",
+  --   "Struct",
+  -- },
+  filter_kind = false,
 
   -- Enum: split_width, full_width, last, none
   -- Determines line highlighting mode when multiple splits are visible.
@@ -137,15 +138,17 @@ ae.setup({
   on_attach = function(bufnr)
     -- Toggle the aerial window with <leader>a
     -- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>a', '<cmd>AerialToggle!<CR>', {})
+
     -- '(' ')'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '(', '{', {noremap = true})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ')', '}', {noremap = true})
-    -- Jump forwards/backwards with '{' and '}'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '{', '<cmd>AerialPrev<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '}', '<cmd>AerialNext<CR>', {})
-    -- Jump up the tree with '[[' or ']]'
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[[', '<cmd>AerialPrevUp<CR>', {})
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']]', '<cmd>AerialNextUp<CR>', {})
+    -- vim.api.nvim_buf_set_keymap(bufnr, '', '(', '{', {noremap = true})
+    -- vim.api.nvim_buf_set_keymap(bufnr, '', ')', '}', {noremap = true})
+
+    -- Jump forwards/backwards
+    vim.api.nvim_buf_set_keymap(bufnr, '', '(', '<cmd>AerialPrev<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, '', ')', '<cmd>AerialNext<CR>', {})
+    -- Jump up the tree
+    vim.api.nvim_buf_set_keymap(bufnr, '', '[[', '<cmd>AerialPrevUp<CR>', {})
+    vim.api.nvim_buf_set_keymap(bufnr, '', ']]', '<cmd>AerialNextUp<CR>', {})
   end,
 
   -- Automatically open aerial when entering supported buffers.

@@ -45,9 +45,16 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  use "numToStr/Comment.nvim" -- Easily comment stuff
+  -- use "numToStr/Comment.nvim" -- Easily comment stuff
+  use {
+    'numToStr/Comment.nvim',
+    -- tag = 'v0.6',
+    config = function()
+        require('Comment').setup()
+    end
+  }
   use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua"
+  use {"kyazdani42/nvim-tree.lua",tag='1.6.6'}
   use "akinsho/bufferline.nvim"
   use "moll/vim-bbye"
   use "nvim-lualine/lualine.nvim"
@@ -59,6 +66,20 @@ return packer.startup(function(use)
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
 
+  -- run code
+  -- use { 'CRAG666/code_runner.nvim', requires = 'nvim-lua/plenary.nvim' }
+  -- use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+  use {'is0n/jaq-nvim'}
+
+  --surround dosent work!!!
+  -- use "tpope/vim-surround"
+  -- use {
+  -- "ur4ltz/surround.nvim",
+  -- config = function()
+  --   require"surround".setup {mappings_style = "surround"}
+  -- end
+  -- }
+
   -- Motion
   -- use "easymotion/vim-easymotion" -- dont work!
   use {
@@ -66,7 +87,9 @@ return packer.startup(function(use)
   branch = 'v1', -- optional but strongly recommended
   config = function()
     -- you can configure Hop the way you like here; see :h hop-config
-    require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    -- require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+    require'hop'.setup { keys = 'asdfghjklzxcvbnmqwertyuiop' }
+   
   end
   }
   -- use "liuchengxu/vista.vim" --navigation sidebar show functions list
@@ -102,7 +125,7 @@ return packer.startup(function(use)
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-  use {'stevearc/aerial.nvim'} --navigation
+  -- use {'stevearc/aerial.nvim'} --navigation
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
@@ -116,6 +139,16 @@ return packer.startup(function(use)
 
   -- Git
   use "lewis6991/gitsigns.nvim"
+
+  -- sessions manager
+  use({
+    "olimorris/persisted.nvim",
+    --module = "persisted", -- For lazy loading
+    config = function()
+      require("persisted").setup()
+      require("telescope").load_extension("persisted") -- To load the telescope extension
+    end,
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

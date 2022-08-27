@@ -5,7 +5,7 @@ end
 
 local setup = {
   plugins = {
-    marks = true, -- shows a list of your marks on ' and `
+    marks = false, -- shows a list of your marks on ' and `
     registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
     spelling = {
       enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
@@ -86,9 +86,11 @@ local mappings = {
     "Buffers",
   },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["q"] = { "<cmd>q<CR>", "Quit" }, 
-  ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+  ["w"] = { "<cmd>wa<CR>", "Save" },
+  ["q"] = { "<cmd>q<CR>", "Quit" },
+  ["Q"] = { "<cmd>q!<CR>", "Quit!" },
+  ["x"] = { "<cmd>Bdelete<CR>", "Close Buffer" },
+  ["X"] = { "<cmd>Bdelete!<CR>", "Close Buffer!" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["f"] = {
     "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
@@ -181,30 +183,53 @@ local mappings = {
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
     h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
+    w = { "<cmd>ToggleTerm size=80 direction=tab<cr>", "window" },
+    e = { "<cmd>te<cr>", "buffer" },
   },
+
   r = {
     name ="run",
-    ["r"] = { "<cmd>term ./%<CR>", "run" },
-    ["m"] = { "<cmd>term typora.exe ./%<cr><cmd>Bdelete!<CR>", "markdown" },
-    ["a"] = { "<cmd>term ida64.exe ./%<cr><cmd>Bdelete!<CR>", "ida64" },
-    ["3"] = { "<cmd>term ida.exe ./%<cr><cmd>Bdelete!<CR>", "ida32" },
-    ["c"] = { "<cmd>ToggleTerm size=80 direction=vertical cmd='checksec ./%'<cr>", "checksec" },
+    -- ["t"] = { "<cmd>ToggleTerm direction=tab<CR>tmux<CR><cmd>q<cr>", "tmux" },
+    -- ["r"] = { "<cmd>wa<CR><cmd>term ./exp.py<CR>", "run new buffer" },
+    -- ["R"] = { "<cmd>wa<CR><cmd>ToggleTerm direction=vertical<cr>./exp.py<cr>", "run" },
+    ["r"] = {"<cmd>Jaq<cr>","run"},
+    ["d"] = { "<cmd>ToggleTerm direction=vertical<CR>gdb-pwndbg attach $(pidof main) -x init.gdb<CR>", "pwndebug" },
+    -- ["D"] = { "<cmd>ToggleTerm direction=vertical<cr>tmux killp<cr>gdb ./main<cr>", "debug" },
+    ["D"] = { "<cmd>ToggleTerm direction=vertical<CR>gdb-multiarch -f ./main -q -ex init-pwndbg -x init.gdb<CR>", "iot pwndebug" },
+    ["m"] = { "<cmd>wa<cr><cmd>term typora.exe ./%<cr><cmd>Bdelete!<CR>", "markdown" },
+    ["a"] = { "<cmd>term ida64.exe ./main<cr><cmd>Bdelete!<CR>", "ida64" },
+    ["3"] = { "<cmd>term ida.exe ./main<cr><cmd>Bdelete!<CR>", "ida32" },
+    -- ["c"] = { "<cmd>TermExec size=80 direction=vertical cmd='checksec ./%'<cr>", "checksec" },
   },
+
+  c = {
+    name = "context(session)",
+    ["c"] = {"<cmd>Telescope persisted<cr>", "search session"},
+    ["j"] = {"<cmd>SessionStart<cr>", "jump(Start) session"},
+    ["k"] = {"<cmd>SessionStop<cr>", "kill(Stop) session"},
+    ["s"] = {"<cmd>SessionSave<cr>", "save session"},
+    ["l"] = {"<cmd>SessionLoad<cr>", "load session"},
+    ["L"] = {"<cmd>SessionLoadLast<cr>", "load last session"},
+    ["d"] = {"<cmd>SessionDelete<cr>", "delete current session"},
+    ["t"] = {"<cmd>SessionToggle<cr>", "toggle, Determines whether to load, start or stop"},
+  },
+
   -- n = {
   --   name = "navigation",
   --   v = { "<cmd>Vista!!<cr>","vista"},
   --   a = { '<cmd>AerialToggle<CR>' , "aerial"},
   -- },
-  n = { '<cmd>AerialToggle<CR>' , "navigation"},
+  -- n = { '<cmd>AerialToggle<CR>' , "navigation"},
   -- ["<leader>"]={ "<Plug>(easymotion-prefix)","easymotion"}
+
   ["<leader>"] = {
     name = "motion",
-    l = {"<cmd>HopLine<cr>","line"},
-    L = {"<cmd>HopLineStart<cr>","lineStart"},
+    L = {"<cmd>HopLine<cr>","line"},
+    l = {"<cmd>HopLineStart<cr>","lineStart"},
     w = {"<cmd>HopWord<cr>","word"},
     c = {"<cmd>HopChar1<cr>","char"},
-    d = {"<cmd>HopLine<cr>","double char"},
-    s = {"<cmd>HopPattern<cr>","line"},
+    d = {"<cmd>HopChar2<cr>","double char"},
+    s = {"<cmd>HopPattern<cr>","search"},
   }
 }
 
